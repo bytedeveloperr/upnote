@@ -10,5 +10,17 @@
         <a class="nav-link" href="/">Home</a>
       </li>
     </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <% if(!currentUser._id){ %>
+      <li class="nav-item active">
+        <a href="/login" class="nav-link">Login</a>
+      </li>
+      <%} else {%>
+      <li class="nav-item active">
+        <a href="/logout" class="nav-link">Logout</a>
+      </li>
+      <%}%>
+    </ul>
   </div>
 </nav>

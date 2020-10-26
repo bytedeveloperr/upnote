@@ -10,7 +10,8 @@ module.exports = {
           title: 'Dashboard',
           csrf: req.csrfToken(),
           notes: notes,
-          format: format
+          format: format,
+          currentUser: req.user
         }
 
         res.render('dashboard', data)

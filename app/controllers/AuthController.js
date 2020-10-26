@@ -9,7 +9,8 @@ module.exports = {
   loginForm: (req, res) => {
     const data = {
       title: 'Login',
-      csrf: req.csrfToken()
+      csrf: req.csrfToken(),
+      currentUser: req.user  
     }
     res.render('login', data)
   },
@@ -17,7 +18,8 @@ module.exports = {
   registerForm: (req, res) => {
     const data = {
       title: 'Register',
-      csrf: req.csrfToken()
+      csrf: req.csrfToken(),
+      currentUser: req.user
     }
     res.render('register', data)
   },

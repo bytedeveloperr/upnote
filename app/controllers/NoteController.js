@@ -42,7 +42,8 @@ module.exports = {
   getSingleNote: (req, res) => {
     const data = {
       title: 'view Note',
-      csrf: req.csrfToken()
+      csrf: req.csrfToken(),
+      currentUser: req.user
     }
     Note.findOne({ _id: req.params.id, user: req.user._id }).populate('user').exec().then(note => {
       if (note) {
