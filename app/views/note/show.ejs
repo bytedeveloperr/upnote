@@ -1,0 +1,35 @@
+<%- layout("layout") %>
+
+<div class="row">
+	<div class="col-md-6 offset-md-3">
+		<% if(note === null) { %>
+			<h4 class="text-center text-dark">You are not authorized to view this note.</h4>
+		<% } else { %>
+		<div class="card">
+			<div class="card-body">
+				<form method="POST" action="/note/<%= note._id %>?_method=DELETE">
+					<input type="hidden" name="_csrf" value="<%= csrf %>">
+					<button type="submit" class="mb-3 btn btn-sm btn-danger"><i class="fa fa-trash-o fa-lg"></i></button>
+				</form>
+				<br />
+				<form class="" method="post" action="/note/<%= note._id %>?_method=PUT">
+					<%- include("../partials/messages") %>
+			      	<input type="hidden" name="_csrf" value="<%= csrf %>">
+			        <div class="form-group">
+			        	<label for="title">Note Title</label>
+			        	<input type="text" class="form-control note-title" name="title" id="title" placeholder="Note Title" value="<%- note.title %>" />
+			        </div>
+			        <div class="form-group">
+			        	<label for="content">Note Content</label>
+			        	<textarea class="form-control note-content" rows="10" name="content" id="content" placeholder="Note Content"><%- note.content %></textarea>
+			        </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-primary">Save</button>
+			      </div>
+				</form>
+			</div>
+		</div>
+		<% } %>
+	</div>
+</div>

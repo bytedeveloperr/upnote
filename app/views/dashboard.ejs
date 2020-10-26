@@ -1,0 +1,59 @@
+<%- layout("layout") %>
+
+<a href="#" class="btn btn-sm btn-outline-dark mb-3" data-toggle="modal" data-target="#newNoteModal">create a new note</a>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Created by</th>
+      <th scope="col">Last Updated</th>
+      <th scope="col">View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if(notes.length >= 1) { notes.forEach(note => { %>
+      <tr>
+        <th><%- note.title %></th>
+        <td><%- note.user.name %></td>
+        <td><%- format(note.updatedAt, 'en_US') %></td>
+        <td>
+        <a href="/note/<%- note._id %>" class="btn btn-sm btn-primary">
+          View
+        </a>
+      </td>
+      </tr>
+    <%})} else { %>
+      <p class="font-weight-bold text-muted text-center">No notes yet, <a href="#" data-toggle="modal" data-target="#newNoteModal">create one</a></p>    
+    <%}%>
+  </tbody>
+</table>
+
+<div class="modal fade" id="newNoteModal">
+  <div class="modal-dialog" role="document">
+    <form method="POST" action="/note/create">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create a Note</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%- include("partials/messages") %>
+        <input type="hidden" name="_csrf" value="<%- csrf %>">
+        <div class="form-group">
+          <label for="title">Note Title</label>
+          <input type="text" class="form-control note-title" placeholder="Note Title" name="title" id="title" />
+        </div>
+        <div class="form-group">
+          <label for="content">Note Content</label>
+          <textarea class="form-control" rows="10" name="content" id="content" placeholder="Note Content"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save </button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
