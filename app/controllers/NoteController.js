@@ -14,10 +14,10 @@ module.exports = {
     } else {
       title = xss(trim(escape(title)))
       content = xss(trim(escape(content)))
-      const note = new Note({ title, content, user: req.session.user._id })
+      const note = new Note({ title, content, user: req.user._id })
       note.save().then(note => {
         if (note) {
-          User.updateOne({ _id: req.session.user._id }, { $push: { notes: note._id } }).then(user => {
+          User.updateOne({ _id: req.user._id }, { $push: { notes: note._id } }).then(user => {
             if (user) {
               res.redirect(`/note/${note._id}`)
             } else {
@@ -44,7 +44,7 @@ module.exports = {
       title: 'view Note',
       csrf: req.csrfToken()
     }
-    Note.findOne({ _id: req.params.id, user: req.session.user._id }).populate('user').exec().then(note => {
+    Note.findOne({ _id: req.params.id, user: req.user._id }).populate('user').exec().then(note => {
       if (note) {
         data.note = note
       } else {
@@ -64,8 +64,8 @@ module.exports = {
     } else {
       title = xss(trim(escape(title)))
       content = xss(trim(escape(content)))
-      const note = new Note({ title, content, user: req.session.user._id })
-      Note.updateOne({ _id: req.params.id, user: req.session.user._id }, { title, content })
+      const note = new Note({ title, content, user: req.user._id })
+      Note.updateOne({ _id: req.params.id, user: req.user._id }, { title, content })
         .then(note => {
           if (note) {
             res.redirect(`/note/${req.params.id}`)
@@ -81,7 +81,7 @@ module.exports = {
   },
 
   deleteNote: (req, res) => {
-    Note.deleteOne({ _id: req.params.id, user: req.session.user._id }, (err) => {
+    Note.deleteOne({ _id: req.params.id, user: req.user._id }, (err) => {
       if (!err) {
         return res.redirect('/')
       } else {

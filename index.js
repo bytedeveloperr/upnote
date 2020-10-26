@@ -33,6 +33,14 @@ app.use(session({
 app.use(flash())
 app.use(csurf({ cookie: true }))
 app.use(methodOverride('_method'))
+app.use((req, res, next) => {
+	if (req.session.user) {
+		req.user = req.session.user
+	} else {
+		req.user = {}
+	}
+	next()
+})
 app.use(routes)
 
 const PORT = process.env.PORT || 3000
