@@ -1,3 +1,4 @@
+require("dotenv").config()
 require("./app/config/database")
 const express = require("express")
 const ejsMate = require("ejs-mate")
@@ -34,4 +35,5 @@ app.use(csurf({ cookie: true }))
 app.use(methodOverride("_method"))
 app.use(routes)
 
-app.listen(process.env.PORT || 3000, () => console.log("listening on port 3000"))
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => console.log("listening on port 3000"))
